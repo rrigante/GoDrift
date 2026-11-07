@@ -40,16 +40,16 @@
 <div class="wrap">
   <div class="eyebrow">Privacy Policy</div>
   <h1>GoDrift keeps your dive data on your device.</h1>
-  <p class="sub">Last updated September 26, 2026 · Applies to GoDrift for iOS, version 1.0</p>
+  <p class="sub">Last updated November 7, 2026 · Applies to GoDrift for iOS, version 1.1</p>
 
   <div class="card">
     <p>GoDrift is a dive logbook. It has no server, no account system, and no analytics — everything you log stays in local storage on your iPhone or iPad, protected the same way the rest of your device's data is.</p>
-    <p>We do not sell, rent, or share your data, because we never collect it in the first place. Nothing you enter in GoDrift is transmitted anywhere.</p>
+    <p>We do not sell, rent, or share your data, because we never collect it in the first place. Your logbook is never transmitted anywhere. The one feature that uses the internet is Conditions, and it sends only the approximate coordinates of a dive site to get a forecast — see "Conditions and weather data" below.</p>
     <div class="pill-row">
       <span class="pill">No account required</span>
       <span class="pill">No backend server</span>
       <span class="pill">No analytics or tracking</span>
-      <span class="pill">No third-party sharing</span>
+      <span class="pill">No logbook data leaves your device</span>
     </div>
   </div>
 
@@ -61,6 +61,8 @@
       <tr><td class="type">Dive site &amp; trip location</td><td class="dim">A site pin you set, an auto-filled trip location, or GPS a dive computer recorded</td><td class="dim">Fills in country/region for a trip and can locate the nearest hyperbaric chamber</td></tr>
       <tr><td class="type">Photos</td><td class="dim">Dive photos and certification card images you attach</td><td class="dim">Shown alongside the matching dive or certification entry</td></tr>
       <tr><td class="type">Free-text notes</td><td class="dim">Site names, buddy names, equipment notes you type</td><td class="dim">Kept with the dive entry they were written for</td></tr>
+      <tr><td class="type">Conditions sites</td><td class="dim">Dive sites you save, or places you search for, in Conditions</td><td class="dim">Name, coordinates and site type are kept on your device so Conditions can show a forecast for them, including in the widget</td></tr>
+      <tr><td class="type">Gear, checklists &amp; backups</td><td class="dim">Gear items, service dates, checklists and backup files you create</td><td class="dim">Used for service reminders and to let you restore your logbook; backups are saved only to a folder you choose</td></tr>
       <tr><td class="type">App preferences</td><td class="dim">Unit system, paired-device and language settings</td><td class="dim">Stored locally so the app remembers your settings between launches</td></tr>
     </tbody>
   </table>
@@ -68,21 +70,35 @@
   <h2>Bluetooth</h2>
   <p>GoDrift uses Bluetooth solely to pull dive data from a paired Shearwater dive computer after a dive. The connection is a direct, one-time transfer between your phone and your dive computer — it does not go through any server GoDrift operates, because GoDrift doesn't operate one.</p>
 
+  <h2>Conditions and weather data</h2>
+  <p>Conditions estimates visibility and shows weather, swell, water temperature, currents and tides for a dive site. To do this, GoDrift sends the site's coordinates, rounded to two decimal places (about 1 km), to <a href="https://open-meteo.com">Open-Meteo</a>, a weather data service, and receives a forecast back.</p>
+  <ul>
+    <li>Only the coordinates of the site you are looking at are sent. Your name, logbook, photos, notes and device identifiers are not.</li>
+    <li>Your own location is used only on your device, to show which of your saved sites are nearest to you. It is not sent to Open-Meteo.</li>
+    <li>Like any internet request, the request reaches Open-Meteo with your device's IP address. Open-Meteo's own policy describes how it handles that; GoDrift does not receive or store it.</li>
+    <li>Searching for a place by name uses Apple Maps search, under Apple's privacy policy.</li>
+    <li>Visibility, wave, current and tide figures are estimates for planning. They are not a substitute for a local dive briefing.</li>
+    <li>Weather data by Open-Meteo.com, licensed under CC BY 4.0.</li>
+  </ul>
+
+  <h2>Location, notifications &amp; widgets</h2>
+  <p>If you allow location access, GoDrift uses it to fill in a trip's country and region, to find the nearest hyperbaric chamber, and to sort your saved sites by distance. If you allow notifications, GoDrift uses them for gear service reminders and the no-fly countdown. Widgets read a small summary that GoDrift shares with them on your device only.</p>
+
   <h2>Photos, camera roll &amp; files</h2>
   <p>When you attach a photo to a dive or certification, GoDrift only accesses the specific image you pick. It does not scan your camera roll in the background.</p>
 
   <h2>If you export or delete your data</h2>
   <ul>
-    <li>Exporting a dive log creates a file on your device that you control — GoDrift doesn't send a copy anywhere else.</li>
+    <li>Exporting a dive log, a PDF page or a backup creates a file on your device that you control — GoDrift doesn't send a copy anywhere else.</li>
     <li>Deleting the app deletes its local data with it, the same as any other app without cloud backup.</li>
     <li>There is no account to close and no server-side copy to request deletion of, because none exists.</li>
   </ul>
 
   <h2>Children's privacy</h2>
-  <p>GoDrift is a logbook for certified divers and isn't directed at children. Since the app collects nothing beyond the device it runs on, no data about any user — adult or minor — is ever collected by us.</p>
+  <p>GoDrift is a logbook for certified divers and isn't directed at children. GoDrift has no accounts and we do not collect data about any user, adult or minor.</p>
 
   <h2>Changes to this policy</h2>
-  <p>If GoDrift adds a feature that changes what's described here — an optional cloud sync, for example — this page will be updated first, with the date above reflecting the change, before that feature ships.</p>
+  <p>If GoDrift adds a feature that changes what's described here — an optional cloud sync or a new data service, for example — this page will be updated first, with the date above reflecting the change, before that feature ships.</p>
 
   <div class="contact">
     <h2>Contact</h2>
