@@ -3,52 +3,179 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>GoDrift</title>
-<meta name="description" content="Support for the GoDrift dive log app.">
+<title>GoDrift: Dive Log for iPhone</title>
+<meta name="description" content="A friendly dive log for iPhone. Import dives from your Shearwater by Bluetooth, see your stats and map, and check conditions for any dive site. No account, no ads.">
+<link rel="canonical" href="https://rrigante.github.io/GoDrift/">
+<meta name="apple-itunes-app" content="app-id=6809811776">
+<meta property="og:title" content="GoDrift: Dive Log for iPhone">
+<meta property="og:description" content="Every dive, ready to relive. Import from your Shearwater, see your stats, check conditions.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://rrigante.github.io/GoDrift/img/home.jpg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Sora:wght@500;600;700&display=swap">
 <style>
-  :root{--bg:#f7f9fb;--surface:#fff;--border:#dde4ea;--text:#132430;--dim:#4a5f6c;--accent:#0a6e8c;--soft:#e4f2f6;color-scheme:light dark}
-  @media (prefers-color-scheme:dark){:root{--bg:#0c1417;--surface:#121c21;--border:#233038;--text:#e7eef1;--dim:#9db0ba;--accent:#5fc3e0;--soft:#132a31}}
-  *{box-sizing:border-box}
-  body{margin:0;padding:0 16px;background:var(--bg);color:var(--text);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-  .wrap{max-width:680px;margin:0 auto;padding:48px 0 80px}
-  .eyebrow{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px}
-  h1{font:600 clamp(28px,5vw,38px)/1.15 Georgia,serif;margin:0 0 8px}
-  h2{font:600 20px Georgia,serif;margin:40px 0 12px;padding-top:20px;border-top:1px solid var(--border)}
-  .sub{color:var(--dim);margin:0 0 32px}
-  .contact{background:var(--soft);border-radius:14px;padding:20px 22px}
-  .contact p{margin:0}
-  a{color:var(--accent)}
-  details{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin-bottom:10px}
-  summary{cursor:pointer;font-weight:600}
-  details p{margin:10px 0 0;color:var(--dim)}
-  .foot{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);color:var(--dim);font-size:13px}
+/* Layout: dark navy ground, alternating copy / phone bands, one orange (the download button). */
+:root{
+  --bg:#f1f5f8; --bg2:#e4ecf2; --fg:#0b1f33; --dim:#476072; --line:#cfdae3;
+  --accent:#0a6f8a; --signal:#d9531e; --on-signal:#fff; --bezel:#0b1f33;
+  --display:'Sora',system-ui,sans-serif; --body:'Instrument Sans',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#07172a; --bg2:#0c2238; --fg:#e9f1f6; --dim:#9fb6c6; --line:#1b3550;
+  --accent:#5cc8e4; --signal:#f07a3d; --on-signal:#07172a; --bezel:#02080f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#07172a; --bg2:#0c2238; --fg:#e9f1f6; --dim:#9fb6c6; --line:#1b3550;
+  --accent:#5cc8e4; --signal:#f07a3d; --on-signal:#07172a; --bezel:#02080f; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:17px/1.6 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.in{max-width:1040px;margin:0 auto}
+h1,h2{font-family:var(--display);text-wrap:balance;letter-spacing:-.02em;margin:0}
+h1{font-size:clamp(34px,6vw,58px);line-height:1.05;font-weight:700}
+h2{font-size:clamp(26px,4vw,38px);line-height:1.12;font-weight:600}
+p{margin:0}
+.label{font:600 12px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.lead{font-size:clamp(18px,2.2vw,21px);color:var(--dim);max-width:34em;margin-top:20px}
+nav{display:flex;justify-content:space-between;align-items:center;padding-block:22px}
+.brand{font:700 20px var(--display);letter-spacing:-.02em}
+.brand span{color:var(--accent)}
+nav a{color:var(--dim);text-decoration:none;font-size:15px}
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center;padding-block:40px 72px}
+.cta{display:inline-flex;align-items:center;min-height:48px;padding:0 26px;border-radius:14px;background:var(--signal);color:var(--on-signal);font:600 16px var(--body);text-decoration:none;margin-top:30px}
+.cta:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.fine{font-size:14px;color:var(--dim);margin-top:12px}
+.phones{display:flex;justify-content:center;gap:0;min-width:0}
+.phone{flex:none;width:min(46%,236px);padding:6px;border-radius:34px;background:var(--bezel);border:1px solid var(--line)}
+.phone img{display:block;width:100%;height:auto;border-radius:28px}
+.phones .phone:nth-child(2){margin-top:56px;margin-left:-14px}
+.band{border-top:1px solid var(--line);padding-block:80px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.row.flip .copy{order:2}
+.copy{min-width:0}
+.copy p.lead{margin-top:16px}
+.pts{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:12px}
+.pts li{padding-left:22px;position:relative;color:var(--fg);font-size:16px}
+.pts li::before{content:"";position:absolute;left:0;top:.7em;width:10px;height:2px;background:var(--accent)}
+.trio{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:44px}
+.trio .phone{width:min(100%,220px)}
+.strip{background:var(--bg2);border-block:1px solid var(--line);padding-block:44px;margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)))}
+.strip .in{padding-inline:max(16px,env(safe-area-inset-left,0px));display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.strip b{display:block;font:600 17px var(--display);margin-bottom:6px}
+.strip span{font-size:15px;color:var(--dim)}
+.close{text-align:center;padding-block:88px 40px}
+.close .lead{margin-inline:auto}
+footer{border-top:1px solid var(--line);padding-block:28px 56px;font-size:14px;color:var(--dim);display:flex;gap:20px;flex-wrap:wrap}
+footer a{color:var(--dim)}
+@media (max-width:820px){
+  .hero,.row{grid-template-columns:1fr;gap:40px}
+  .row.flip .copy{order:0}
+  .strip .in{grid-template-columns:1fr 1fr}
+  .band{padding-block:60px}
+}
+@media (max-width:420px){.strip .in{grid-template-columns:1fr}}
 </style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"MobileApplication","name":"GoDrift: Dive Log","operatingSystem":"iOS","applicationCategory":"SportsApplication","description":"A friendly dive log for iPhone: import dives from your Shearwater by Bluetooth, see your stats and map, and check conditions for any dive site.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"downloadUrl":"https://apps.apple.com/app/id6809811776","url":"https://rrigante.github.io/GoDrift/"}</script>
 </head>
 <body>
-<div class="wrap">
-  <div class="eyebrow">Support</div>
-  <h1>GoDrift Support</h1>
-  <p class="sub">Help with the GoDrift dive log app for iPhone.</p>
+<div class="in">
+  <nav>
+    <div class="brand">Go<span>Drift</span></div>
+    <a href="support.html">Support</a>
+  </nav>
 
-  <div class="contact">
-    <p>Questions, bug reports or feedback: <a href="mailto:GoDrift.Dive@gmail.com">GoDrift.Dive@gmail.com</a>. Please include your iOS version and, if you can, what you were doing when the problem happened. I aim to reply within a few days.</p>
-  </div>
+  <section class="hero">
+    <div>
+      <div class="label">The dive log for iPhone</div>
+      <h1>Every dive, ready to relive.</h1>
+      <p class="lead">Your Shearwater downloads and your own notes become a logbook you will want to open: depth profiles, photos, buddies, stats and a map of everywhere you have been.</p>
+      <a class="cta" href="https://apps.apple.com/app/id6809811776">Download on the App Store</a>
+      <p class="fine">Free to download. No account, no ads.</p>
+    </div>
+    <div class="phones">
+      <div class="phone"><img src="img/home.jpg" alt="GoDrift home screen showing 224 logged dives, 175 hours underwater and the latest dives"></div>
+      <div class="phone"><img src="img/profile.jpg" alt="Dive profile chart for a 19.9 m reef dive on Bonaire"></div>
+    </div>
+  </section>
 
-  <h2>Frequently asked questions</h2>
-  <details>
-    <summary>Where is my dive data stored?</summary>
-    <p>Only on your device. GoDrift has no account system and no server. See the <a href="privacy.html">privacy policy</a> for details.</p>
-  </details>
-  <details>
-    <summary>How do I import dives from my Shearwater dive computer?</summary>
-    <p>Pair the dive computer over Bluetooth from within GoDrift and sync after your dive. The transfer goes directly between your dive computer and your phone.</p>
-  </details>
-  <details>
-    <summary>Will I lose my log if I delete the app or change phones?</summary>
-    <p>Data lives on the device, so deleting the app deletes the log. Export your dive log before deleting the app or changing phones.</p>
-  </details>
+  <section class="band">
+    <div class="row">
+      <div class="copy">
+        <div class="label">Import</div>
+        <h2>Surface, sync, done.</h2>
+        <p class="lead">Your Shearwater sends its dives to your iPhone over Bluetooth while you rinse your gear. Bluetooth import is included, with nothing to buy for your computer's brand.</p>
+        <ul class="pts">
+          <li>Depth profile, temperature, gases, CNS and deco data on every dive</li>
+          <li>Review new dives before they join your log, and never get duplicates</li>
+          <li>Coming from another logbook? Bring it in from Excel or a PADI export</li>
+        </ul>
+      </div>
+      <div class="phones"><div class="phone" style="width:min(70%,270px)"><img src="img/profile.jpg" alt="Dive profile with depth, CNS and ascent rate"></div></div>
+    </div>
+  </section>
 
-  <p class="foot"><a href="privacy.html">Privacy policy</a> · GoDrift, a personal dive log app.</p>
+  <section class="band">
+    <div class="row flip">
+      <div class="copy">
+        <div class="label">Stats</div>
+        <h2>Watch your diving add up.</h2>
+        <p class="lead">Time underwater, deepest dive, air consumption, dives per month and a map that fills in with every trip. Tap any number to open the dives behind it.</p>
+        <ul class="pts">
+          <li>Depth ranges and air consumption (SAC) at a glance</li>
+          <li>Every site pinned on a world map</li>
+          <li>Your history by month and by year</li>
+        </ul>
+      </div>
+      <div class="phones">
+        <div class="phone"><img src="img/stats.jpg" alt="Statistics with depth range breakdown"></div>
+        <div class="phone"><img src="img/map.jpg" alt="World map of dive locations and dives per month"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="row">
+      <div class="copy">
+        <div class="label">Conditions</div>
+        <h2>Know before you go.</h2>
+        <p class="lead">Visibility estimate, 10-day forecast, hourly weather, swell, currents and tides for any dive site, with the best window of the day. Save your favorite sites and keep them on your Home Screen.</p>
+        <p class="fine">A planning aid built from weather and sea data. It does not replace a local briefing.</p>
+      </div>
+      <div class="phones"><div class="phone" style="width:min(70%,270px)"><img src="img/conditions.jpg" alt="Conditions for Cancun: visibility 18 to 27 m, best window 08:00 to 12:00, 10-day outlook"></div></div>
+    </div>
+  </section>
+
+  <section class="band" style="text-align:center">
+    <div class="label">The details</div>
+    <h2>The dive as you remember it.</h2>
+    <p class="lead" style="margin-inline:auto">The site, the suit and the weight, who you dived with, and the photo of the moray. Everything that makes a dive that dive.</p>
+    <div class="trio">
+      <div class="phone"><img src="img/site.jpg" alt="Dive site with type, water and trip"></div>
+      <div class="phone"><img src="img/gear.jpg" alt="Gear used on a dive: suit, boots, weight"></div>
+      <div class="phone"><img src="img/notes.jpg" alt="Dive buddy, notes and photos"></div>
+    </div>
+  </section>
 </div>
+
+<div class="strip">
+  <div class="in">
+    <div><b>No account</b><span>Open the app and log. Nothing to sign up for.</span></div>
+    <div><b>Your data stays yours</b><span>Stored on your iPhone, with full backup and restore.</span></div>
+    <div><b>Take it with you</b><span>Export your logbook to CSV whenever you want.</span></div>
+    <div><b>Gear and safety</b><span>Service reminders and a no-fly countdown, in the same app.</span></div>
+  </div>
+</div>
+
+<div class="in">
+  <section class="close">
+    <h2>Your next dive deserves a place in the log.</h2>
+    <p class="lead">Start with the next one.</p>
+    <a class="cta" href="https://apps.apple.com/app/id6809811776">Download GoDrift</a>
+    <p class="fine">Free to download. No account, no ads.</p>
+  </section>
+  <footer>
+    <a href="support.html">Support</a><a href="privacy.html">Privacy</a>
+    <span>GoDrift is a logging and planning aid. It does not replace your dive computer or your training.</span>
+  </footer>
+</div>
+
 </body>
 </html>
