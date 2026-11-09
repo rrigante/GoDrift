@@ -36,14 +36,15 @@ p{margin:0}
 .label{font:600 12px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
 .lead{font-size:clamp(18px,2.2vw,21px);color:var(--dim);max-width:34em;margin-top:20px}
 nav{display:flex;justify-content:space-between;align-items:center;padding-block:22px}
-.brand{font:700 20px var(--display);letter-spacing:-.02em}
-.brand span{color:var(--accent)}
+.brand{display:block;line-height:0}
+.brand img{display:block;height:30px;width:auto}
+.navlinks{display:flex;gap:22px}
 nav a{color:var(--dim);text-decoration:none;font-size:15px}
 .hero{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center;padding-block:40px 72px}
 .cta{display:inline-flex;align-items:center;min-height:48px;padding:0 26px;border-radius:14px;background:var(--signal);color:var(--on-signal);font:600 16px var(--body);text-decoration:none;margin-top:30px}
 .cta:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 .fine{font-size:14px;color:var(--dim);margin-top:12px}
-.phones{display:flex;justify-content:center;gap:0;min-width:0}
+.phones{display:flex;align-items:flex-start;justify-content:center;gap:0;min-width:0}
 .phone{flex:none;width:min(46%,236px);padding:6px;border-radius:34px;background:var(--bezel);border:1px solid var(--line)}
 .phone img{display:block;width:100%;height:auto;border-radius:28px}
 .phones .phone:nth-child(2){margin-top:56px;margin-left:-14px}
@@ -57,6 +58,10 @@ nav a{color:var(--dim);text-decoration:none;font-size:15px}
 .pts li::before{content:"";position:absolute;left:0;top:.7em;width:10px;height:2px;background:var(--accent)}
 .trio{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:44px}
 .trio .phone{width:min(100%,220px)}
+.in-narrow{max-width:640px;margin:0 auto}
+.about{text-align:center}
+.cta.ghost{background:transparent;color:var(--fg);border:1.5px solid var(--accent)}
+.about .lead{margin-inline:auto}
 .strip{background:var(--bg2);border-block:1px solid var(--line);padding-block:44px;margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)))}
 .strip .in{padding-inline:max(16px,env(safe-area-inset-left,0px));display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
 .strip b{display:block;font:600 17px var(--display);margin-bottom:6px}
@@ -78,8 +83,8 @@ footer a{color:var(--dim)}
 <body>
 <div class="in">
   <nav>
-    <div class="brand">Go<span>Drift</span></div>
-    <a href="support.html">Support</a>
+    <a class="brand" href="./" aria-label="GoDrift home"><picture><source media="(prefers-color-scheme: dark)" srcset="img/godrift-lockup-dark.svg"><img src="img/godrift-lockup-light.svg" alt="GoDrift" width="139" height="30"></picture></a>
+    <span class="navlinks"><a href="#about">About</a><a href="support.html">Support</a></span>
   </nav>
 
   <section class="hero">
@@ -151,6 +156,17 @@ footer a{color:var(--dim)}
       <div class="phone"><img src="img/site.jpg" alt="Dive site with type, water and trip"></div>
       <div class="phone"><img src="img/gear.jpg" alt="Gear used on a dive: suit, boots, weight"></div>
       <div class="phone"><img src="img/notes.jpg" alt="Dive buddy, notes and photos"></div>
+    </div>
+  </section>
+  <section class="band about" id="about">
+    <div class="in-narrow">
+      <div class="label">About us</div>
+      <h2>Built by divers who were never satisfied.</h2>
+      <p class="lead">I am a diving fanatic, and no logbook was ever enough. Every app I tried did one thing well and left me wanting the rest: a clean log, honest stats, a computer that just syncs, a look at the sea before the trip.</p>
+      <p class="lead">So I built the one I wanted. GoDrift is made by divers, for divers, and it is never finished. Every dive we log shows us something to make better.</p>
+      <p class="lead">Your ideas shape it. Tell us what you wish your logbook did, and the next update might be yours.</p>
+      <a class="cta ghost" href="mailto:GoDrift.Dive@gmail.com?subject=GoDrift%20suggestion">Send us a suggestion</a>
+      <p class="fine">GoDrift.Dive@gmail.com</p>
     </div>
   </section>
 </div>
